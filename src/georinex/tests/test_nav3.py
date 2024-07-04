@@ -5,6 +5,7 @@ import xarray
 from datetime import datetime
 import georinex as gr
 
+from src.georinex import rinexnav3
 
 R = Path(__file__).parent / "data"
 
@@ -210,6 +211,11 @@ def test_large_all(sv, size):
 
     dat = nav.sel(sv=sv).dropna(how="all", dim="time")
     assert dat.time.size == size  # manually counted from file
+
+
+def test_large_rinex3():
+    fn = R / "BRDC00IGS_R_20220010000_01D_MN.rnx"
+    rinexnav3(fn)
 
 
 @pytest.mark.parametrize(
