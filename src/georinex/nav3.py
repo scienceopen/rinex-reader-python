@@ -227,10 +227,16 @@ def _sparefields(cf: list[str], sys: str, N: int) -> list[str]:
         elif N == 27:  # no middle or trailing spare fields
             cf = cf[:22] + cf[23:-3]
     elif sys == "I":
-        if N == 28:
-            cf = cf[:28]
+        print (cf)
+        print (len(cf))
+        if N == 26:
+            cf = cf[:22] + cf[23:26] + [cf[27]]
+        print (cf)
+        print (len(cf))
 
     if N != len(cf):
+        # print (cf, len(cf), N)
+        # print (np.where(np.array(cf) == 'spare0'))
         raise ValueError(f"System {sys} NAV data is not the same length as the number of fields.")
 
     return cf
