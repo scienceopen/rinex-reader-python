@@ -78,7 +78,6 @@ def rinexnav3(
                 raw += ln[STARTCOL3:80]
             # one line per SV
             raws.append(raw.replace("D", "E").replace("\n", ""))
-
     # %% parse collected data per SV
     # NOTE: must be 'ns' or .to_netcdf will fail!
     t = np.array([np.datetime64(t, "ns") for t in times])
