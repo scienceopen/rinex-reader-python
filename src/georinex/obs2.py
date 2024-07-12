@@ -451,8 +451,12 @@ def obsheader2(
     except (KeyError, ValueError):
         pass
 
-    try:  # This key is OPTIONAL
+    try:  
         hdr["interval"] = float(hdr["INTERVAL"][:10])
+    except (KeyError, ValueError):
+        pass
+    try:  
+        hdr["version"] = float(hdr["RINEX VERSION / TYPE"].split()[0])
     except (KeyError, ValueError):
         pass
     try:
