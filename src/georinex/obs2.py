@@ -287,7 +287,7 @@ def rinexsystem2(
     elif "time" in obs.coords.keys():
         # median is robust against gaps
         try:
-            obs.attrs["interval"] = str(np.median(np.diff(obs.time) / np.timedelta64(1, "s")))
+            obs.attrs["interval"] = np.median(np.diff(obs.time) / np.timedelta64(1, "s"))
         except TypeError:
             print ("Couldn't process interval")
     # else:
