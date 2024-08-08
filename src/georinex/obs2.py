@@ -52,7 +52,7 @@ def rinexobs2(
             fast=fast,
             interval=interval,
         )
-        if o.time.values.size > 0:
+        if len(o.variables) > 0:
             attrs = o.attrs
             obs = xarray.merge((obs, o))
     obs.attrs = attrs
@@ -250,7 +250,6 @@ def rinexsystem2(
                     data[i, j, isv] = darr[:, k]
     # %% output gathering
     data = data[:, : times.size, :]  # trims down for unneeded preallocated
-
     fields = []
     for field in hdr["fields"]:
         fields.append(field)
@@ -305,7 +304,10 @@ def rinexsystem2(
     if "position_geodetic" in hdr.keys():
         obs.attrs["position_geodetic"] = hdr["position_geodetic"]
     if "LEAP SECONDS" in hdr.keys():
-        obs.attrs["leap_seconds"] = int(hdr["LEAP SECONDS"])
+        try:
+            obs.attrs["leap_seconds"] = int(hdr["LEAP SECONDS"])
+        except:
+            pass
     
     return obs
 

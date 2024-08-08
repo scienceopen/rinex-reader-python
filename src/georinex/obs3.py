@@ -161,7 +161,7 @@ def rinexobs3(
         except ValueError:
             pass
     if "LEAP SECONDS" in hdr.keys():
-        data.attrs["leap_seconds"] = int(hdr["LEAP SECONDS"])
+        data.attrs["leap_seconds"] = int(hdr["LEAP SECONDS"].split()[0])
     return data
 
 
