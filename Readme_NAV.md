@@ -31,13 +31,13 @@ nav['M0']
 Print start, stop times and measurement interval:
 
 ```sh
-python -m georinex.time ~/my.rnx
+python -m georinex.gtime ~/my.rnx
 ```
 
 Print start, stop times and measurement interval for all files in a directory:
 
 ```sh
-python -m georinex.time ~/data *.rnx
+python -m georinex.gtime ~/data *.rnx
 ```
 
 Get vector of `datetime.datetime` in RINEX file:

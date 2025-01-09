@@ -88,7 +88,7 @@ python -m georinex.read myrinex.XXx
 Read times from a file (helpful for debugging a file that doesn't read properly):
 
 ```sh
-python -m georinex.time myrinex.XXx
+python -m georinex.gtime myrinex.XXx
 ```
 
 Read NetCDF converted RINEX data:

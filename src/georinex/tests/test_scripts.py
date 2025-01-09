@@ -15,7 +15,7 @@ def test_convenience():
 
 
 def test_time():
-    subprocess.check_call([sys.executable, "-m", "georinex.time", str(R)])
+    subprocess.check_call([sys.executable, "-m", "georinex.gtime", str(R)])
 
 
 # %% convert all OBS 2 files to NetCDF4
