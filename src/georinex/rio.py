@@ -82,7 +82,7 @@ def opener(fn: T.TextIO | Path, header: bool = False) -> T.Iterator[T.TextIO]:
                 for rinexfn in flist:
                     with z.open(rinexfn, "r") as bf:
                         f = io.StringIO(
-                            io.TextIOWrapper(bf, encoding="ascii", errors="ignore").read()  # type: ignore
+                            io.TextIOWrapper(bf, encoding="ascii", errors="ignore").read()
                         )
                         yield f
         elif suffix == ".z" or magic.startswith(b"\x1f\x9d"):

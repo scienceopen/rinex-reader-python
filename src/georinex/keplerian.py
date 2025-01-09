@@ -57,8 +57,8 @@ def keplerian2ecef(
     # %% time elapsed since reference epoch
     for i, (t0, t1, t2) in enumerate(zip(T0, sv["time"], Toe)):
         tsv = t1.values.astype("datetime64[us]").astype(datetime)
-        toe = timedelta(seconds=t2) + t0  # type: ignore
-        tk[i] = (tsv - toe).total_seconds()  # type: ignore
+        toe = timedelta(seconds=t2) + t0
+        tk[i] = (tsv - toe).total_seconds()
     # %% Kepler's eqn of eccentric anomaly
     Mk = sv["M0"].values + n * tk  # Mean Anomaly
     Ek = Mk + e * np.sin(Mk)  # Eccentric anomaly
