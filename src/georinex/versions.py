@@ -2,6 +2,7 @@ import xarray
 import numpy
 import sys
 import pandas
+
 try:
     import netCDF4
 except ImportError:

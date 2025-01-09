@@ -1,24 +1,23 @@
+import importlib.resources as ir
 import pytest
 from pytest import approx
 import xarray
-from pathlib import Path
 from datetime import datetime
 import numpy as np
 import georinex as gr
 
-#
-R = Path(__file__).parent / "data"
-
 
 def test_time():
-    times = gr.gettime(R / "ab422100.18n")
+    fn = ir.files(f"{__package__}.data") / "ab422100.18n"
+    times = gr.gettime(fn)
 
     assert times[0] == datetime(2018, 7, 29, 1, 59, 44)
     assert times[-1] == datetime(2018, 7, 30)
 
 
 def test_data():
-    nav = gr.load(R / "ab422100.18n")
+    fn = ir.files(f"{__package__}.data") / "ab422100.18n"
+    nav = gr.load(fn)
 
     nav0 = nav.sel(time="2018-07-29T03:59:44").dropna(dim="sv", how="all")
 
@@ -62,7 +61,7 @@ def test_data():
 
 
 def test_mangled():
-    fn = R / "14601736.18n"
+    fn = ir.files(f"{__package__}.data") / "14601736.18n"
 
     nav = gr.load(fn)
 
@@ -72,7 +71,7 @@ def test_mangled():
 
 
 def test_mangled2():
-    fn = R / "brdc2420.18n.gz"
+    fn = ir.files(f"{__package__}.data") / "brdc2420.18n.gz"
 
     nav = gr.load(fn)
 
@@ -95,7 +94,9 @@ def test_mangled2():
 
 
 def test_tlim_past_eof():
-    nav = gr.load(R / "p1462100.18g", tlim=("2018-07-29T23:45", "2018-07-30"))
+    nav = gr.load(
+        ir.files(f"{__package__}.data") / "p1462100.18g", tlim=("2018-07-29T23:45", "2018-07-30")
+    )
 
     times = gr.to_datetime(nav.time)
 
@@ -103,7 +104,7 @@ def test_tlim_past_eof():
 
 
 def test_galileo():
-    nav = gr.load(R / "ceda2100.18e")
+    nav = gr.load(ir.files(f"{__package__}.data") / "ceda2100.18e")
 
     E18 = nav.sel(sv="E18").dropna(dim="time", how="all")
     assert gr.to_datetime(E18.time) == datetime(2018, 7, 29, 12, 40)
@@ -142,7 +143,7 @@ def test_galileo():
 
 
 def test_gps():
-    nav = gr.load(R / "brdc2800.15n")
+    nav = gr.load(ir.files(f"{__package__}.data") / "brdc2800.15n")
 
     times = gr.to_datetime(nav.time)
     assert times[1] == datetime(2015, 10, 7, 1, 59, 28)
@@ -187,14 +188,14 @@ def test_gps():
 def test_small():
     pytest.importorskip("netCDF4")
 
-    truth = xarray.open_dataset(R / "r2all.nc", group="NAV")
-    nav = gr.load(R / "demo.10n")
+    truth = xarray.open_dataset(ir.files(f"{__package__}.data") / "r2all.nc", group="NAV")
+    nav = gr.load(ir.files(f"{__package__}.data") / "demo.10n")
 
     assert nav.equals(truth)
 
 
 def test_ionospheric_correction():
-    nav = gr.load(R / "14601736.18n")
+    nav = gr.load(ir.files(f"{__package__}.data") / "14601736.18n")
     assert nav.attrs["ionospheric_corr_GPS"] == approx(
         [
             0.4657e-08,

@@ -2,18 +2,16 @@
 test for LZW .Z file
 """
 
-from pathlib import Path
+import importlib.resources as ir
 import pytest
 
 import georinex as gr
-
-R = Path(__file__).parent / "data"
 
 
 def test_obs2_lzw():
     pytest.importorskip("ncompress")
 
-    fn = R / "ac660270.18o.Z"
+    fn = ir.files(f"{__package__}.data") / "ac660270.18o.Z"
 
     obs = gr.load(fn)
 
