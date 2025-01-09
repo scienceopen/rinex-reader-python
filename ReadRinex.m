@@ -1,13 +1,11 @@
 function ReadRinex(fn)
 %% ReadRinex  GeoRINEX Python toolbox from Matlab
 %
-% must first do one-time install in Python 3.6 from Terminal:
+% must first do one-time install in Python from Terminal:
 %   pip install -e .
 %
 % example:
 % ReadRinex('tests/data/minimal.10o')
-
-assert(~verLessThan('matlab', '9.5'), 'Matlab >= R2018b required')
 
 dat = py.georinex.load(fn);
 
