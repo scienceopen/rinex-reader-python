@@ -2,27 +2,26 @@
 test all files types with time limits
 """
 
+import importlib.resources as ir
+
 import pytest
-from pathlib import Path
 from datetime import datetime
 import numpy as np
 
 import georinex as gr
-
-R = Path(__file__).parent / "data"
 
 
 @pytest.mark.parametrize(
     "fn, tlim, tref, tlen",
     [
         (
-            R / "york0440.zip",
+            ir.files(f"{__package__}.data") / "york0440.zip",
             ("2015-02-13T23:59", "2015-02-14T00:00"),
             [datetime(2015, 2, 13, 23, 59, 0), datetime(2015, 2, 13, 23, 59, 30)],
             2880,
         ),
         (
-            R / "CEDA00USA_R_20182100000_23H_15S_MO.rnx.gz",
+            ir.files(f"{__package__}.data") / "CEDA00USA_R_20182100000_23H_15S_MO.rnx.gz",
             ("2018-07-29T01:17", "2018-07-29T01:18"),
             [
                 datetime(2018, 7, 29, 1, 17),
@@ -33,13 +32,13 @@ R = Path(__file__).parent / "data"
             4675,
         ),
         (
-            R / "CEDA00USA_R_20182100000_01D_MN.rnx.gz",
+            ir.files(f"{__package__}.data") / "CEDA00USA_R_20182100000_01D_MN.rnx.gz",
             ("2018-07-29T08", "2018-07-29T09"),
             [datetime(2018, 7, 29, 8, 20), datetime(2018, 7, 29, 8, 50)],
             21,
         ),
         (
-            R / "ceda2100.18e",
+            ir.files(f"{__package__}.data") / "ceda2100.18e",
             ("2018-07-29T11", "2018-07-29T12"),
             [datetime(2018, 7, 29, 11, 50), datetime(2018, 7, 29, 12)],
             21,
@@ -71,7 +70,7 @@ def test_tlim(fn, tlim, tref, tlen):
 @pytest.mark.parametrize("interval, expected_len", [(None, 14), (15, 14), (35, 8)])
 def test_interval_obs3(interval, expected_len):
     obs = gr.load(
-        R / "CEDA00USA_R_20182100000_23H_15S_MO.rnx.gz",
+        ir.files(f"{__package__}.data") / "CEDA00USA_R_20182100000_23H_15S_MO.rnx.gz",
         interval=interval,
         tlim=("2018-07-29T01:00", "2018-07-29T01:05"),
     )
@@ -83,7 +82,7 @@ def test_interval_obs3(interval, expected_len):
 
 @pytest.mark.parametrize("interval, expected_len", [(None, 9), (0, 9), (15, 9), (35, 4)])
 def test_interval_obs2(interval, expected_len):
-    obs = gr.load(R / "ab430140.18o.zip", interval=interval)
+    obs = gr.load(ir.files(f"{__package__}.data") / "ab430140.18o.zip", interval=interval)
     times = gr.to_datetime(obs.time)
 
     assert len(times) == expected_len

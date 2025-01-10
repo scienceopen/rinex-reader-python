@@ -1,19 +1,16 @@
+import importlib.resources as ir
 import pytest
 from pytest import approx
 import xarray
-from pathlib import Path
 from datetime import datetime
 import georinex as gr
-
-#
-R = Path(__file__).parent / "data"
 
 
 def test_contents():
     """
     test specifying specific measurements (usually only a few of the thirty or so are needed)
     """
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn)
     for v in ["L1C", "L2P", "C1P", "C2P", "C1C", "S1C", "S1P", "S2P"]:
         assert v in obs
@@ -21,7 +18,7 @@ def test_contents():
 
 
 def test_meas_one():
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn, meas="C1C")
     assert "L1C" not in obs
 
@@ -33,7 +30,7 @@ def test_meas_one():
 
 def test_meas_two():
     """two NON-SEQUENTIAL measurements"""
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn, meas=["L1C", "S1C"])
     assert "L2P" not in obs
 
@@ -52,7 +49,7 @@ def test_meas_two():
 
 def test_meas_some_missing():
     """measurement not in some systems"""
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn, meas=["S2P"])
     assert "L2P" not in obs
 
@@ -65,7 +62,7 @@ def test_meas_some_missing():
 
 def test_meas_all_missing():
     """measurement not in any system"""
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn, meas="nonsense")
     assert "nonsense" not in obs
 
@@ -73,7 +70,7 @@ def test_meas_all_missing():
 
 
 def test_meas_wildcard():
-    fn = R / "demo3.10o"
+    fn = ir.files(f"{__package__}.data") / "demo3.10o"
     obs = gr.load(fn, meas="C")
     assert "L1C" not in obs
     assert "C1P" in obs and "C2P" in obs and "C1C" in obs
@@ -88,13 +85,13 @@ def test_junk_time(fname):
     fixes https://github.com/geospace-code/georinex/issues/77
     """
 
-    times = gr.gettime(R / fname)
+    times = gr.gettime(ir.files(f"{__package__}.data") / fname)
     assert times.tolist() == [datetime(2010, 3, 5, 0, 0, 30), datetime(2010, 3, 5, 0, 1, 30)]
 
 
 @pytest.mark.parametrize("fname", ["ABMF00GLP_R_20181330000_01D_30S_MO.zip"])
 def test_zip(fname):
-    fn = R / fname
+    fn = ir.files(f"{__package__}.data") / fname
     obs = gr.load(fn)
 
     assert (
@@ -142,10 +139,10 @@ def test_zip(fname):
 def test_bad_system():
     """Z and Y are not currently used by RINEX"""
     with pytest.raises(KeyError):
-        gr.load(R / "demo3.10o", use="Z")
+        gr.load(ir.files(f"{__package__}.data") / "demo3.10o", use="Z")
 
     with pytest.raises(KeyError):
-        gr.load(R / "demo3.10o", use=["Z", "Y"])
+        gr.load(ir.files(f"{__package__}.data") / "demo3.10o", use=["Z", "Y"])
 
 
 @pytest.mark.parametrize("use", ("G", ["G"]))
@@ -155,9 +152,9 @@ def test_one_system(use):
     """
     pytest.importorskip("netCDF4")
 
-    truth = xarray.open_dataset(R / "r3G.nc", group="OBS")
+    truth = xarray.open_dataset(ir.files(f"{__package__}.data") / "r3G.nc", group="OBS")
 
-    obs = gr.load(R / "demo3.10o", use=use)
+    obs = gr.load(ir.files(f"{__package__}.data") / "demo3.10o", use=use)
     assert obs.equals(truth)
 
     assert obs.position == approx([4789028.4701, 176610.0133, 4195017.031])
@@ -175,8 +172,8 @@ def test_multi_system():
 
     use = ("G", "R")
 
-    obs = gr.load(R / "demo3.10o", use=use)
-    truth = xarray.open_dataset(R / "r3GR.nc", group="OBS")
+    obs = gr.load(ir.files(f"{__package__}.data") / "demo3.10o", use=use)
+    truth = xarray.open_dataset(ir.files(f"{__package__}.data") / "r3GR.nc", group="OBS")
 
     assert obs.equals(truth)
 
@@ -187,8 +184,8 @@ def test_all_system():
     """
     pytest.importorskip("netCDF4")
 
-    obs = gr.load(R / "demo3.10o")
-    truth = gr.rinexobs(R / "r3all.nc", group="OBS")
+    obs = gr.load(ir.files(f"{__package__}.data") / "demo3.10o")
+    truth = gr.rinexobs(ir.files(f"{__package__}.data") / "r3all.nc", group="OBS")
 
     assert obs.equals(truth)
 
@@ -199,13 +196,13 @@ def tests_all_indicators():
     """
     pytest.importorskip("netCDF4")
 
-    obs = gr.load(R / "demo3.10o", useindicators=True)
-    truth = gr.rinexobs(R / "r3all_indicators.nc", group="OBS")
+    obs = gr.load(ir.files(f"{__package__}.data") / "demo3.10o", useindicators=True)
+    truth = gr.rinexobs(ir.files(f"{__package__}.data") / "r3all_indicators.nc", group="OBS")
 
     assert obs.equals(truth)
 
 
 @pytest.mark.parametrize("fn, tname", [("demo3.10o", "GPS"), ("default_time_system3.10o", "GAL")])
 def test_time_system(fn, tname):
-    obs = gr.load(R / fn)
+    obs = gr.load(ir.files(f"{__package__}.data") / fn)
     assert obs.attrs["time_system"] == tname

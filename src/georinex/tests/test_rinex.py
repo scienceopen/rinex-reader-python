@@ -1,10 +1,10 @@
+import importlib.resources as ir
 import pytest
 from pytest import approx
-from pathlib import Path
+
 import georinex as gr
 import xarray
 
-R = Path(__file__).parent / "data"
 
 blanks = [
     "blank.10n",
@@ -20,19 +20,19 @@ blanks = [
 
 @pytest.mark.parametrize("filename", blanks)
 def test_blank_read(filename):
-    dat = gr.load(R / filename)
+    dat = gr.load(ir.files(f"{__package__}.data") / filename)
     assert dat.time.size == 0
 
 
 @pytest.mark.parametrize("filename", blanks)
 def test_blank_write(tmp_path, filename):
     pytest.importorskip("netCDF4")
-    gr.load(R / filename, tmp_path)
+    gr.load(ir.files(f"{__package__}.data") / filename, tmp_path)
 
 
 @pytest.mark.parametrize("filename", blanks)
 def test_blank_times(filename):
-    times = gr.gettime(R / filename)
+    times = gr.gettime(ir.files(f"{__package__}.data") / filename)
     assert times.size == 0
 
 
@@ -44,7 +44,7 @@ def test_blank_times(filename):
 def test_minimal(tmp_path, filename):
     pytest.importorskip("netCDF4")
 
-    fn = R / filename
+    fn = ir.files(f"{__package__}.data") / filename
 
     dat = gr.load(fn)
     assert isinstance(dat, xarray.Dataset), f"{type(dat)} should be xarray.Dataset"
@@ -66,9 +66,9 @@ def test_minimal(tmp_path, filename):
 
 def test_dont_care_file_extension():
     """GeoRinex ignores the file extension and only considers file headers to determine what a file is."""
-    fn = R / "brdc0320.16l.txt"
+    fn = ir.files(f"{__package__}.data") / "brdc0320.16l.txt"
 
-    hdr = gr.rinexheader(R / fn)
+    hdr = gr.rinexheader(ir.files(f"{__package__}.data") / fn)
     assert int(hdr["version"]) == 3
 
     nav = gr.load(fn)

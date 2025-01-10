@@ -1,17 +1,14 @@
-from pathlib import Path
+import importlib.resources as ir
 
 import pytest
 from pytest import approx
 
 import georinex as gr
 
-#
-R = Path(__file__).parent / "data"
-
 
 @pytest.mark.parametrize("fn", ["example1.sp3a", "example2.sp3a", "example1.sp3a.gz"])
 def test_sp3a(fn):
-    dat = gr.load(R / fn)
+    dat = gr.load(ir.files(f"{__package__}.data") / fn)
 
     d0 = dat.sel(time="1994-12-17T00:15:00")
 
@@ -29,7 +26,7 @@ def test_sp3a(fn):
 
 @pytest.mark.parametrize("fn", ["igs19362.sp3c"])
 def test_sp3c(fn):
-    dat = gr.load(R / fn)
+    dat = gr.load(ir.files(f"{__package__}.data") / fn)
 
     d0 = dat.sel(time="2017-02-14T00:15:00")
 
@@ -43,16 +40,16 @@ def test_sp3c(fn):
 
 def test_blank():
     with pytest.raises(ValueError):
-        gr.load(R / "blank.sp3")
+        gr.load(ir.files(f"{__package__}.data") / "blank.sp3")
 
 
 def test_header():
     with pytest.raises(ValueError):
-        gr.load(R / "header.sp3")
+        gr.load(ir.files(f"{__package__}.data") / "header.sp3")
 
 
 def test_minimal_sp3c():
-    dat = gr.load(R / "minimal.sp3c")
+    dat = gr.load(ir.files(f"{__package__}.data") / "minimal.sp3c")
 
     d0 = dat.sel(time="2017-02-14T00:00:00")
 
@@ -65,7 +62,7 @@ def test_minimal_sp3c():
 
 
 def test_minimal_sp3d():
-    dat = gr.load(R / "minimal.sp3d")
+    dat = gr.load(ir.files(f"{__package__}.data") / "minimal.sp3d")
     d0 = dat.sel(time="2020-01-24T00:00:00")
     assert len(d0.sv) == 116
     E21 = d0.sel(sv="E21")
@@ -75,7 +72,7 @@ def test_minimal_sp3d():
 
 # perhaps not a valid test?
 # def test_truncated():
-#     dat = gr.load(R / "truncated.sp3")
+#     dat = gr.load(ir.files(f"{__package__}.data") / "truncated.sp3")
 
 #     d0 = dat.sel(time="2017-02-14T00:35:00")
 
