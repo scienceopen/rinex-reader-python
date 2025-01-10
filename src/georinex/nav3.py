@@ -240,233 +240,235 @@ def _sparefields(cf: list[str], sys: str, N: int) -> list[str]:
 
 
 def _fields(ln: str, sv_sys: str) -> list[str]:
-    if sv_sys == "G":
-        """
-        ftp://igs.org/pub/data/format/rinex303.pdf
 
-        pages:
-        G: A23-A24
-        E: A25-A28
-        R: A29-A30
-        J: A31-A32
-        C: A33-A34
-        S: A35-A36
-        I: A37-A39
-        """
-        fields = [
-            "SVclockBias",
-            "SVclockDrift",
-            "SVclockDriftRate",
-            "IODE",
-            "Crs",
-            "DeltaN",
-            "M0",
-            "Cuc",
-            "Eccentricity",
-            "Cus",
-            "sqrtA",
-            "Toe",
-            "Cic",
-            "Omega0",
-            "Cis",
-            "Io",
-            "Crc",
-            "omega",
-            "OmegaDot",
-            "IDOT",
-            "CodesL2",
-            "GPSWeek",
-            "L2Pflag",
-            "SVacc",
-            "health",
-            "TGD",
-            "IODC",
-            "TransTime",
-            "FitIntvl",
-            "spare0",
-            "spare1",
-        ]
-        assert len(fields) == 31
-    elif sv_sys == "C":  # pg A-33  Beidou Compass BDT
-        fields = [
-            "SVclockBias",
-            "SVclockDrift",
-            "SVclockDriftRate",
-            "AODE",
-            "Crs",
-            "DeltaN",
-            "M0",
-            "Cuc",
-            "Eccentricity",
-            "Cus",
-            "sqrtA",
-            "Toe",
-            "Cic",
-            "Omega0",
-            "Cis",
-            "Io",
-            "Crc",
-            "omega",
-            "OmegaDot",
-            "IDOT",
-            "spare0",
-            "BDTWeek",
-            "spare1",
-            "SVacc",
-            "SatH1",
-            "TGD1",
-            "TGD2",
-            "TransTime",
-            "AODC",
-            "spare2",
-            "spare3",
-        ]
-        assert len(fields) == 31
-    elif sv_sys == "R":  # pg. A-29   GLONASS
-        fields = [
-            "SVclockBias",
-            "SVrelFreqBias",
-            "MessageFrameTime",
-            "X",
-            "dX",
-            "dX2",
-            "health",
-            "Y",
-            "dY",
-            "dY2",
-            "FreqNum",
-            "Z",
-            "dZ",
-            "dZ2",
-            "AgeOpInfo",
-        ]
-        assert len(fields) == 15
-    elif sv_sys == "S":  # pg. A-35 SBAS
-        fields = [
-            "SVclockBias",
-            "SVrelFreqBias",
-            "MessageFrameTime",
-            "X",
-            "dX",
-            "dX2",
-            "health",
-            "Y",
-            "dY",
-            "dY2",
-            "URA",
-            "Z",
-            "dZ",
-            "dZ2",
-            "IODN",
-        ]
-        assert len(fields) == 15
-    elif sv_sys == "J":  # pg. A-31  QZSS
-        fields = [
-            "SVclockBias",
-            "SVclockDrift",
-            "SVclockDriftRate",
-            "IODE",
-            "Crs",
-            "DeltaN",
-            "M0",
-            "Cuc",
-            "Eccentricity",
-            "Cus",
-            "sqrtA",
-            "Toe",
-            "Cic",
-            "Omega0",
-            "Cis",
-            "Io",
-            "Crc",
-            "omega",
-            "OmegaDot",
-            "IDOT",
-            "CodesL2",
-            "GPSWeek",
-            "L2Pflag",
-            "SVacc",
-            "health",
-            "TGD",
-            "IODC",
-            "TransTime",
-            "FitIntvl",
-            "spare0",
-            "spare1",
-        ]
-        assert len(fields) == 31
-    elif sv_sys == "E":  # pg. A-25 Galileo Table A8
-        fields = [
-            "SVclockBias",
-            "SVclockDrift",
-            "SVclockDriftRate",
-            "IODnav",
-            "Crs",
-            "DeltaN",
-            "M0",
-            "Cuc",
-            "Eccentricity",
-            "Cus",
-            "sqrtA",
-            "Toe",
-            "Cic",
-            "Omega0",
-            "Cis",
-            "Io",
-            "Crc",
-            "omega",
-            "OmegaDot",
-            "IDOT",
-            "DataSrc",
-            "GALWeek",
-            "spare0",
-            "SISA",
-            "health",
-            "BGDe5a",
-            "BGDe5b",
-            "TransTime",
-            "spare1",
-            "spare2",
-            "spare3",
-        ]
-        assert len(fields) == 31
-    elif sv_sys == "I":
-        fields = [
-            "SVclockBias",
-            "SVclockDrift",
-            "SVclockDriftRate",
-            "IODEC",
-            "Crs",
-            "DeltaN",
-            "M0",
-            "Cuc",
-            "Eccentricity",
-            "Cus",
-            "sqrtA",
-            "Toe",
-            "Cic",
-            "Omega0",
-            "Cis",
-            "Io",
-            "Crc",
-            "omega",
-            "OmegaDot",
-            "IDOT",
-            "spare0",
-            "BDTWeek",
-            "spare1",
-            "URA",
-            "health",
-            "TGD",
-            "spare2",
-            "TransTime",
-            "spare3",
-            "spare4",
-            "spare5",
-        ]
-        assert len(fields) == 31
-    else:
-        raise ValueError(f"Unknown SV system {sv_sys}")
+    match sv_sys:
+        case "G":
+            """
+            ftp://igs.org/pub/data/format/rinex303.pdf
+
+            pages:
+            G: A23-A24
+            E: A25-A28
+            R: A29-A30
+            J: A31-A32
+            C: A33-A34
+            S: A35-A36
+            I: A37-A39
+            """
+            fields = [
+                "SVclockBias",
+                "SVclockDrift",
+                "SVclockDriftRate",
+                "IODE",
+                "Crs",
+                "DeltaN",
+                "M0",
+                "Cuc",
+                "Eccentricity",
+                "Cus",
+                "sqrtA",
+                "Toe",
+                "Cic",
+                "Omega0",
+                "Cis",
+                "Io",
+                "Crc",
+                "omega",
+                "OmegaDot",
+                "IDOT",
+                "CodesL2",
+                "GPSWeek",
+                "L2Pflag",
+                "SVacc",
+                "health",
+                "TGD",
+                "IODC",
+                "TransTime",
+                "FitIntvl",
+                "spare0",
+                "spare1",
+            ]
+            assert len(fields) == 31
+        case "C":  # pg A-33  Beidou Compass BDT
+            fields = [
+                "SVclockBias",
+                "SVclockDrift",
+                "SVclockDriftRate",
+                "AODE",
+                "Crs",
+                "DeltaN",
+                "M0",
+                "Cuc",
+                "Eccentricity",
+                "Cus",
+                "sqrtA",
+                "Toe",
+                "Cic",
+                "Omega0",
+                "Cis",
+                "Io",
+                "Crc",
+                "omega",
+                "OmegaDot",
+                "IDOT",
+                "spare0",
+                "BDTWeek",
+                "spare1",
+                "SVacc",
+                "SatH1",
+                "TGD1",
+                "TGD2",
+                "TransTime",
+                "AODC",
+                "spare2",
+                "spare3",
+            ]
+            assert len(fields) == 31
+        case "R":  # pg. A-29   GLONASS
+            fields = [
+                "SVclockBias",
+                "SVrelFreqBias",
+                "MessageFrameTime",
+                "X",
+                "dX",
+                "dX2",
+                "health",
+                "Y",
+                "dY",
+                "dY2",
+                "FreqNum",
+                "Z",
+                "dZ",
+                "dZ2",
+                "AgeOpInfo",
+            ]
+            assert len(fields) == 15
+        case "S":  # pg. A-35 SBAS
+            fields = [
+                "SVclockBias",
+                "SVrelFreqBias",
+                "MessageFrameTime",
+                "X",
+                "dX",
+                "dX2",
+                "health",
+                "Y",
+                "dY",
+                "dY2",
+                "URA",
+                "Z",
+                "dZ",
+                "dZ2",
+                "IODN",
+            ]
+            assert len(fields) == 15
+        case "J":  # pg. A-31  QZSS
+            fields = [
+                "SVclockBias",
+                "SVclockDrift",
+                "SVclockDriftRate",
+                "IODE",
+                "Crs",
+                "DeltaN",
+                "M0",
+                "Cuc",
+                "Eccentricity",
+                "Cus",
+                "sqrtA",
+                "Toe",
+                "Cic",
+                "Omega0",
+                "Cis",
+                "Io",
+                "Crc",
+                "omega",
+                "OmegaDot",
+                "IDOT",
+                "CodesL2",
+                "GPSWeek",
+                "L2Pflag",
+                "SVacc",
+                "health",
+                "TGD",
+                "IODC",
+                "TransTime",
+                "FitIntvl",
+                "spare0",
+                "spare1",
+            ]
+            assert len(fields) == 31
+        case "E":  # pg. A-25 Galileo Table A8
+            fields = [
+                "SVclockBias",
+                "SVclockDrift",
+                "SVclockDriftRate",
+                "IODnav",
+                "Crs",
+                "DeltaN",
+                "M0",
+                "Cuc",
+                "Eccentricity",
+                "Cus",
+                "sqrtA",
+                "Toe",
+                "Cic",
+                "Omega0",
+                "Cis",
+                "Io",
+                "Crc",
+                "omega",
+                "OmegaDot",
+                "IDOT",
+                "DataSrc",
+                "GALWeek",
+                "spare0",
+                "SISA",
+                "health",
+                "BGDe5a",
+                "BGDe5b",
+                "TransTime",
+                "spare1",
+                "spare2",
+                "spare3",
+            ]
+            assert len(fields) == 31
+        case "I":
+            fields = [
+                "SVclockBias",
+                "SVclockDrift",
+                "SVclockDriftRate",
+                "IODEC",
+                "Crs",
+                "DeltaN",
+                "M0",
+                "Cuc",
+                "Eccentricity",
+                "Cus",
+                "sqrtA",
+                "Toe",
+                "Cic",
+                "Omega0",
+                "Cis",
+                "Io",
+                "Crc",
+                "omega",
+                "OmegaDot",
+                "IDOT",
+                "spare0",
+                "BDTWeek",
+                "spare1",
+                "URA",
+                "health",
+                "TGD",
+                "spare2",
+                "TransTime",
+                "spare3",
+                "spare4",
+                "spare5",
+            ]
+            assert len(fields) == 31
+        case _:
+            raise ValueError(f"Unknown SV system {sv_sys}")
 
     return fields
 

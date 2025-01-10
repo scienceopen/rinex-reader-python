@@ -43,11 +43,9 @@ def load(
     # %% determine if/where to write NetCDF4/HDF5 output
     outfn = None
     if out:
-        out = Path(out).expanduser()
-        if out.is_dir():
-            outfn = out / (
-                rinexfn.name + ".nc"
-            )  # not with_suffix to keep unique RINEX 2 filenames
+        if (out := Path(out).expanduser()).is_dir():
+            outfn = out / (rinexfn.name + ".nc")
+            # not with_suffix to keep unique RINEX 2 filenames
         elif out.suffix == ".nc":
             outfn = out
         else:

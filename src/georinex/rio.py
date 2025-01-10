@@ -169,14 +169,15 @@ def rinexinfo(f: T.TextIO | Path) -> dict[T.Hashable, T.Any]:
         version = rinex_version(line)[0]
         file_type = line[20]
         if int(version) == 2:
-            if file_type == "N":
-                system = "G"
-            elif file_type == "G":
-                system = "R"
-            elif file_type == "E":
-                system = "E"
-            else:
-                system = line[40]
+            match file_type:
+                case "N":
+                    system = "G"
+                case "G":
+                    system = "R"
+                case "E":
+                    system = "E"
+                case _:
+                    system = line[40]
         else:
             system = line[40]
 

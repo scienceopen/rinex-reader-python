@@ -15,9 +15,7 @@ def check_unique_times(times: np.ndarray) -> bool:
     Nuniq = np.unique(times).size
     Ntimes = times.size
 
-    ok = Ntimes == Nuniq
-
-    if not ok:
+    if not (ok := Ntimes == Nuniq):
         logging.error(f"only {Nuniq} times out of {Ntimes} are unique times")
 
     return ok
@@ -52,24 +50,25 @@ def determine_time_system(header: dict[T.Hashable, T.Any]) -> str:
     except KeyError:
         file_type = header["systems"]
 
-    if file_type == "G":
-        ts = "GPS"
-    elif file_type == "R":
-        ts = "GLO"
-    elif file_type == "E":
-        ts = "GAL"
-    elif file_type == "J":
-        ts = "QZS"
-    elif file_type == "C":
-        ts = "BDT"
-    elif file_type == "I":
-        ts = "IRN"
-    elif file_type == "M":
+    match file_type:
+        case "G":
+            ts = "GPS"
+        case "R":
+            ts = "GLO"
+        case "E":
+            ts = "GAL"
+        case "J":
+            ts = "QZS"
+        case "C":
+            ts = "BDT"
+        case "I":
+            ts = "IRN"
+        case "M":
+            ts = header["TIME OF FIRST OBS"][48:51].strip()
         # Else the type is mixed and the time system must be specified in
         # TIME OF FIRST OBS row.
-        ts = header["TIME OF FIRST OBS"][48:51].strip()
-    else:
-        raise ValueError(f"unknown file type {file_type}")
+        case _:
+            raise ValueError(f"unknown file type {file_type}")
 
     return ts
 
