@@ -1,4 +1,4 @@
-from pathlib import Path
+import importlib.resources as ir
 import pytest
 from pytest import approx
 import xarray
@@ -6,12 +6,9 @@ from datetime import datetime
 import georinex as gr
 
 
-R = Path(__file__).parent / "data"
-
-
 @pytest.mark.parametrize("fname", ["demo_nav3.17n"])
 def test_nav3header(fname):
-    hdr = gr.rinexheader(R / fname)
+    hdr = gr.rinexheader(ir.files(f"{__package__}.data") / fname)
     assert hdr["IONOSPHERIC CORR"]["GPSA"] == approx(
         [1.1176e-08, -1.4901e-08, -5.9605e-08, 1.1921e-07]
     )
@@ -22,7 +19,7 @@ def test_nav3header(fname):
 
 @pytest.mark.parametrize("fname", ["VILL00ESP_R_20181700000_01D_MN.rnx.gz"])
 def test_time(fname):
-    times = gr.gettime(R / fname)
+    times = gr.gettime(ir.files(f"{__package__}.data") / fname)
 
     assert times[0] == datetime(2018, 4, 24, 8)
     assert times[-1] == datetime(2018, 6, 20, 22)
@@ -30,7 +27,7 @@ def test_time(fname):
 
 @pytest.mark.parametrize("fname", ["CEDA00USA_R_20182100000_01D_MN.rnx.gz"])
 def test_tlim_past_eof(fname):
-    fn = R / fname
+    fn = ir.files(f"{__package__}.data") / fname
     nav = gr.load(fn, tlim=("2018-07-29T23", "2018-07-29T23:30"))
 
     times = gr.to_datetime(nav.time)
@@ -44,7 +41,7 @@ def test_spare(fname):
     NAV3 with filled spare fields (many files omit the spare fields)
     """
 
-    fn = R / fname
+    fn = ir.files(f"{__package__}.data") / fname
     nav = gr.load(fn)
     G01 = nav.sel(sv="G01").dropna(dim="time", how="all")
     assert G01.time.size == 2
@@ -53,7 +50,7 @@ def test_spare(fname):
 
 @pytest.mark.parametrize("fname", ["ELKO00USA_R_20182100000_01D_MN.rnx.gz"])
 def test_mixed(fname):
-    fn = R / fname
+    fn = ir.files(f"{__package__}.data") / fname
     nav = gr.load(fn, tlim=(datetime(2018, 7, 28, 21), datetime(2018, 7, 28, 23)))
 
     E04 = nav.sel(sv="E04").dropna(dim="time", how="all")
@@ -185,7 +182,7 @@ def test_mixed(fname):
     ids=["SBAS", "GPS", "BDS", "GAL", "GLO"],
 )
 def test_large(filename, sv, shape):
-    nav = gr.load(R / filename, use=sv[0])
+    nav = gr.load(ir.files(f"{__package__}.data") / filename, use=sv[0])
 
     assert nav.svtype[0] == sv[0] and len(nav.svtype) == 1
 
@@ -204,7 +201,7 @@ def test_large(filename, sv, shape):
     "sv, size", [("C05", 25), ("E05", 45), ("G05", 7), ("R05", 19), ("S36", 542)]
 )
 def test_large_all(sv, size):
-    fn = R / "VILL00ESP_R_20181700000_01D_MN.rnx.gz"
+    fn = ir.files(f"{__package__}.data") / "VILL00ESP_R_20181700000_01D_MN.rnx.gz"
     nav = gr.load(fn)
     assert set(nav.svtype) == {"C", "E", "G", "R", "S"}
 
@@ -231,8 +228,8 @@ def test_ref(rfn, ncfn):
     """
     pytest.importorskip("netCDF4")
 
-    truth = gr.load(R / ncfn)
-    nav = gr.load(R / rfn)
+    truth = gr.load(ir.files(f"{__package__}.data") / ncfn)
+    nav = gr.load(ir.files(f"{__package__}.data") / rfn)
 
     for v in nav.data_vars:
         assert truth[v].equals(nav[v])
@@ -240,7 +237,7 @@ def test_ref(rfn, ncfn):
 
 
 def test_ionospheric_correction():
-    nav = gr.load(R / "demo_nav3.17n")
+    nav = gr.load(ir.files(f"{__package__}.data") / "demo_nav3.17n")
 
     assert nav.attrs["ionospheric_corr_GPS"] == approx(
         [
@@ -255,14 +252,18 @@ def test_ionospheric_correction():
         ]
     )
 
-    nav = gr.load(R / "galileo3.15n")
+    nav = gr.load(ir.files(f"{__package__}.data") / "galileo3.15n")
 
     assert nav.attrs["ionospheric_corr_GAL"] == approx([0.1248e03, 0.5039, 0.2377e-01])
 
 
 def test_missing_fields():
     """Tests the conditions when missing fields exist within rinex data."""
-    nav = gr.load(R / "BRDC00IGS_R_20201360000_01D_MN.rnx", use="E", verbose=True)
+    nav = gr.load(
+        ir.files(f"{__package__}.data") / "BRDC00IGS_R_20201360000_01D_MN.rnx",
+        use="E",
+        verbose=True,
+    )
     # missing fields should be interpreted as zero and not NaN
     # no NaN values should exist when loading the provided rinex file
     assert nav.to_dataframe().isna().sum().sum() == 0
@@ -276,5 +277,9 @@ def test_missing_fields_end_of_line():
     value should be interpretted as 0.
 
     """
-    nav = gr.load(R / "BRDM00DLR_R_20130010000_01D_MN.rnx", use="J", verbose=True)
+    nav = gr.load(
+        ir.files(f"{__package__}.data") / "BRDM00DLR_R_20130010000_01D_MN.rnx",
+        use="J",
+        verbose=True,
+    )
     assert nav.to_dataframe()["FitIntvl"].to_list() == [0.0, 0.0]

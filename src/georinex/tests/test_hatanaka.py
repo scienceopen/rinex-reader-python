@@ -2,19 +2,18 @@
 Hatanaka CRINEX
 """
 
+import importlib.resources as ir
+
 import pytest
-from pathlib import Path
 from datetime import datetime
 
 import georinex as gr
-
-R = Path(__file__).parent / "data"
 
 
 def test_obs2():
     pytest.importorskip("hatanaka")
 
-    fn = R / "york0440.15d"
+    fn = ir.files(f"{__package__}.data") / "york0440.15d"
 
     info = gr.rinexinfo(fn)
     assert int(info["version"]) == 1
@@ -33,7 +32,7 @@ def test_obs2():
 def test_obs3_gz():
     pytest.importorskip("hatanaka")
 
-    fn = R / "CEBR00ESP_R_20182000000_01D_30S_MO.crx.gz"
+    fn = ir.files(f"{__package__}.data") / "CEBR00ESP_R_20182000000_01D_30S_MO.crx.gz"
 
     info = gr.rinexinfo(fn)
     assert int(info["version"]) == 3
@@ -96,7 +95,7 @@ def test_obs3_gz():
 def test_obs3_crx(suffix):
     pytest.importorskip("hatanaka")
 
-    fn = R / ("P43300USA_R_20190012056_17M_15S_MO" + suffix)
+    fn = ir.files(f"{__package__}.data") / ("P43300USA_R_20190012056_17M_15S_MO" + suffix)
 
     info = gr.rinexinfo(fn)
 

@@ -3,15 +3,15 @@ Self-test file, registration case
 for OBS RINEX reader
 """
 
-import pytest
-import xarray
+import importlib.resources as ir
+
 from datetime import datetime
+
+import xarray
+import pytest
 from pytest import approx
-from pathlib import Path
 
 import georinex as gr
-
-R = Path(__file__).parent / "data"
 
 
 @pytest.mark.parametrize(
@@ -52,7 +52,7 @@ def test_bad_files(tmp_path):
 def test_netcdf_read():
     pytest.importorskip("netCDF4")
 
-    dat = gr.load(R / "r2all.nc")
+    dat = gr.load(ir.files(f"{__package__}.data") / "r2all.nc")
 
     assert isinstance(dat, dict), f"{type(dat)}"
     assert isinstance(dat["obs"], xarray.Dataset)
@@ -65,7 +65,7 @@ def test_netcdf_write(tmp_path):
     pytest.importorskip("netCDF4")
 
     fn = tmp_path / "rw.nc"
-    obs = gr.load(R / "demo.10o", out=fn)
+    obs = gr.load(ir.files(f"{__package__}.data") / "demo.10o", out=fn)
 
     wobs = gr.load(fn)
 
@@ -79,7 +79,7 @@ def test_netcdf_write_sp3(tmp_path):
     pytest.importorskip("netCDF4")
 
     fn = tmp_path / "sp3.nc"
-    obs = gr.load(R / "example1.sp3a", out=fn)
+    obs = gr.load(ir.files(f"{__package__}.data") / "example1.sp3a", out=fn)
 
     wobs = xarray.load_dataset(fn)
 
@@ -94,7 +94,7 @@ def test_locs():
 
     pat = ["*o", "*O.rnx", "*O.rnx.gz", "*O.crx", "*O.crx.gz"]
 
-    flist = gr.globber(R, pat)
+    flist = gr.globber(ir.files(f"{__package__}.data"), pat)
 
     locs = gg.get_locations(flist)
 
@@ -105,7 +105,7 @@ def test_locs():
 def test_nc_load(dtype):
     pytest.importorskip("netCDF4")
 
-    truth = xarray.open_dataset(R / "r2all.nc", group=dtype)
+    truth = xarray.open_dataset(ir.files(f"{__package__}.data") / "r2all.nc", group=dtype)
 
-    obs = gr.load(R / f"demo.10{dtype[0].lower()}")
+    obs = gr.load(ir.files(f"{__package__}.data") / f"demo.10{dtype[0].lower()}")
     assert obs.equals(truth)
