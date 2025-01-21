@@ -1,0 +1,155 @@
+     4.0            OBSERVATION DATA    M (MIXED)           RINEX VERSION / TYPE
+BLANK OR G = GPS,  R = GLONASS,  E = GALILEO,  M = MIXED    COMMENT
+gLAB                gAGE                20191209 121400 UTC PGM / RUN BY / DATE
+EXAMPLE OF A MIXED RINEX FILE                               COMMENT
+MRKR                                                        MARKER NAME
+9080.1.34                                                   MARKER NUMBER
+GEODETIC                                                    MARKER TYPE
+gAGE                UPC: Technical University of Catalonia  OBSERVER / AGENCY
+THIS FILE IS PART OF THE gLAB TOOL SUITE                    COMMENT
+FILE PREPARED BY: YANFENG DONG                              COMMENT
+PLEASE EMAIL ANY COMMENT OR REQUEST TO: glab.gage @ upc.edu COMMENT
+IR2200716006        ASHTECH UZ-12       CQ00                REC # / TYPE / VERS
+482                 AOAD/M_T        NONE                    ANT # / TYPE
+   4789028.4701    176610.0133   4195017.0310               APPROX POSITION XYZ
+         0.9030         0.0000         0.0000               ANTENNA: DELTA H/E/N
+         0.0000         0.0000         0.0000               ANTENNA: DELTA X/Y/Z
+G C1C    0.9030         0.0000         0.0000               ANTENNA: PHASECENTER
+         0.0000         0.0000         0.0000               ANTENNA: B.SIGHT XYZ
+         0.0000                                             ANTENNA: ZERODIR AZI
+         0.0000         0.0000         0.0000               ANTENNA: ZERODIR XYZ
+         0.0000         0.0000         0.0000               CENTER OF MASS: XYZ
+C   28 C2I C2X C5X C6I C7I C7Z C8X D2I D2X D5X D6I D7I D7Z  SYS / # / OBS TYPES
+       D8X L2I L2X L5X L6I L7I L7Z L8X S2I S2X S5X S6I S7I  SYS / # / OBS TYPES
+       S7Z S8X                                              SYS / # / OBS TYPES
+E   20 C1X C5X C6X C7X C8X D1X D5X D6X D7X D8X L1X L5X L6X  SYS / # / OBS TYPES
+       L7X L8X S1X S5X S6X S7X S8X                          SYS / # / OBS TYPES
+G   20 C1C C1W C2W C2X C5X D1C D1W D2W D2X D5X L1C L1W L2W  SYS / # / OBS TYPES
+       L2X L5X S1C S1W S2W S2X S5X                          SYS / # / OBS TYPES
+R   20 C1C C1P C2C C2P C3X D1C D1P D2C D2P D3X L1C L1P L2C  SYS / # / OBS TYPES
+       L2P L3X S1C S1P S2C S2P S3X                          SYS / # / OBS TYPES
+S    4 C1C C5I D1C D5I L1C L5I S1C S5I                      SYS / # / OBS TYPES
+DBHZ                                                        SIGNAL STRENGTH UNIT
+    30.000                                                  INTERVAL
+  2019     7    19     0     0     0.0000000     GPS        TIME OF FIRST OBS
+  2019     7    19    23    59    30.0000000     GPS        TIME OF LAST OBS
+     1                                                      RCV CLOCK OFFS APPL
+G CC2NONCC          p1c1bias.hist @ goby.nrl.navy.mil       SYS / DCBS APPLIED
+G PAGES             igs05.atx @ igscb.jpl.nasa.gov          SYS / PCVS APPLIED
+C    1  28 C2I C2X C5X C6I C7I C7Z C8X D2I D2X D5X D6I D7I  SYS / SCALE FACTOR
+           D7Z D8X L2I L2X L5X L6I L7I L7Z L8X S2I S2X S5X  SYS / SCALE FACTOR
+           S6I S7I S7Z S8X                                  SYS / SCALE FACTOR
+E    1  20 C1X C5X C6X C7X C8X D1X D5X D6X D7X D8X L1X L5X  SYS / SCALE FACTOR
+           L6X L7X L8X S1X S5X S6X S7X S8X                  SYS / SCALE FACTOR
+G    1  20 C1C C1W C2W C2X C5X D1C D1W D2W D2X D5X L1C L1W  SYS / SCALE FACTOR
+           L2W L2X L5X S1C S1W S2W S2X S5X                  SYS / SCALE FACTOR
+R    1  20 C1C C1P C2C C2P C3X D1C D1P D2C D2P D3X L1C L1P  SYS / SCALE FACTOR
+           L2C L2P L3X S1C S1P S2C S2P S3X                  SYS / SCALE FACTOR
+S    1   4 C1C C5I D1C D5I L1C L5I S1C S5I                  SYS / SCALE FACTOR
+C L2I  0.00000   4 C06 C12 C24 C30                          SYS / PHASE SHIFTS
+C L2X  0.00000   2 C24 C30                                  SYS / PHASE SHIFTS
+C L5X  0.25000   2 C24 C30                                  SYS / PHASE SHIFTS
+C L6I  0.00000   4 C06 C12 C24 C30                          SYS / PHASE SHIFTS
+C L7I  0.00000   2 C06 C12                                  SYS / PHASE SHIFTS
+C L7Z  0.25000   2 C24 C30                                  SYS / PHASE SHIFTS
+C L8X  0.25000   2 C24 C30                                  SYS / PHASE SHIFTS
+E L1X  0.50000   4 E07 E11 E25 E36                          SYS / PHASE SHIFTS
+E L5X  0.25000   4 E07 E11 E25 E36                          SYS / PHASE SHIFTS
+E L6X  0.50000   4 E07 E11 E25 E36                          SYS / PHASE SHIFTS
+E L7X  0.25000   4 E07 E11 E25 E36                          SYS / PHASE SHIFTS
+E L8X  0.25000   4 E07 E11 E25 E36                          SYS / PHASE SHIFTS
+G L1C  0.00000   4 G03 G12 G17 G32                          SYS / PHASE SHIFTS
+G L1W -0.25000   4 G03 G12 G17 G32                          SYS / PHASE SHIFTS
+G L2W  0.00000   4 G03 G12 G17 G32                          SYS / PHASE SHIFTS
+G L2X  0.25000   4 G03 G12 G17 G32                          SYS / PHASE SHIFTS
+G L5X  0.25000   2 G03 G32                                  SYS / PHASE SHIFTS
+R L1C  0.00000   4 R01 R09 R15 R26                          SYS / PHASE SHIFTS
+R L1P -0.25000   4 R01 R09 R15 R26                          SYS / PHASE SHIFTS
+R L2C  0.25000   4 R01 R09 R15 R26                          SYS / PHASE SHIFTS
+R L2P  0.00000   4 R01 R09 R15 R26                          SYS / PHASE SHIFTS
+R L3X  0.25000   4 R01 R09 R15 R26                          SYS / PHASE SHIFTS
+S L1C  0.00000   4 S23 S26 S27 S36                          SYS / PHASE SHIFTS
+S L5I  0.25000   3 S23 S27 S36                              SYS / PHASE SHIFTS
+  4 R01  1R09 -2R15  0R26 -5                                GLONASS SLOT / FRQ #
+    18                                                      LEAP SECONDS
+    20                                                      # OF SATELLITES
+   C06   803               808   808               803      PRN / # OF OBS
+               808   808               803               405PRN / # OF OBS
+         566               803               808   808      PRN / # OF OBS
+                                                            PRN / # OF OBS
+   C12  1338              1339  1347              1338      PRN / # OF OBS
+              1339  1347              1338               897PRN / # OF OBS
+        1206              1338              1339  1347      PRN / # OF OBS
+                                                            PRN / # OF OBS
+   C24  1091  1089  1093  1092        1089   930  1091  1089PRN / # OF OBS
+        1093  1092        1089  1091  1091  1089  1047  1046PRN / # OF OBS
+              1088  1091  1091  1089  1093  1092        1089PRN / # OF OBS
+         930                                                PRN / # OF OBS
+   C30   650   650   650   651         650    23   650   650PRN / # OF OBS
+         650   651         650   650   650   650   223   224PRN / # OF OBS
+               408   637   650   650   650   651         650PRN / # OF OBS
+          23                                                PRN / # OF OBS
+   E07  1152  1152  1151  1152  1102  1152  1152  1151  1152PRN / # OF OBS
+        1150  1152  1106  1105  1151  1150  1152  1152  1151PRN / # OF OBS
+        1152  1105                                          PRN / # OF OBS
+   E11   769   769   769   769         769   769   769   769PRN / # OF OBS
+         769   769   208   208   493   756   769   769   769PRN / # OF OBS
+         769                                                PRN / # OF OBS
+   E25  1213  1212  1212  1213   204  1213  1212  1212  1213PRN / # OF OBS
+        1211  1213   640   640   875  1172  1213  1212  1212PRN / # OF OBS
+        1213   204                                          PRN / # OF OBS
+   E36  1483  1482  1481  1482   466  1483  1482  1481  1482PRN / # OF OBS
+        1481  1483   708   708  1099  1442  1483  1482  1481PRN / # OF OBS
+        1482   466                                          PRN / # OF OBS
+   G03  1174  1005  1149  1174  1174  1174  1149  1149  1174PRN / # OF OBS
+        1174  1174  1136  1083  1056  1056  1174  1005  1149PRN / # OF OBS
+        1174  1174                                          PRN / # OF OBS
+   G12  1192   113  1162  1192        1192  1162  1162  1192PRN / # OF OBS
+              1192  1149   887   614        1192   113  1162PRN / # OF OBS
+        1192                                                PRN / # OF OBS
+   G17   973   618   958   973         973   958   958   973PRN / # OF OBS
+               973   945   728   667         973   618   958PRN / # OF OBS
+         973                                                PRN / # OF OBS
+   G32   956   319   943   956   956   956   943   943   956PRN / # OF OBS
+         956   956   928   877   690   690   956   319   943PRN / # OF OBS
+         956   956                                          PRN / # OF OBS
+   R07  1243   821  1243  1186        1243  1243  1243  1186PRN / # OF OBS
+              1243  1230   907   944        1243   821  1243PRN / # OF OBS
+        1186                                                PRN / # OF OBS
+   R09   830   541   829   822   829   830   830   829   822PRN / # OF OBS
+         829   830   830   783   821   783   830   541   829PRN / # OF OBS
+         822   829                                          PRN / # OF OBS
+   R15  1169   281  1168  1159        1169  1168  1168  1159PRN / # OF OBS
+              1169  1130   681   897        1169   281  1168PRN / # OF OBS
+        1159                                                PRN / # OF OBS
+   R26  1019   512  1019  1019  1019  1019  1019  1019  1019PRN / # OF OBS
+        1019  1019   992   618   868   618  1019   512  1019PRN / # OF OBS
+        1019  1019                                          PRN / # OF OBS
+   S23  2865  2865  2865  2865  2865  2865  2865  2865      PRN / # OF OBS
+   S26  2865        2865        2865        2865            PRN / # OF OBS
+   S27  2865  2865  2865  2865  2865  2865  2865  2865      PRN / # OF OBS
+   S36  2865  2865  2865  2865  2865  2865  2865  2865      PRN / # OF OBS
+ C1C 0.000 C1P 0.000 C2C 0.000 C2P 0.000                    GLONASS COD/PHS/BIS
+                                                            END OF HEADER
+> 2019 07 19 00 04 30.0000000  0 10      -0.000283148424
+C06  39301719.069 9                                  39301712.369 9  39301712.739 9                                       677.415                                         550.598         523.968                                   204654401.39606                                                                                                        37.000                                          38.750          41.750
+C30  22415846.869 8  22415845.129 8  22415844.469 8  22415844.739 8                  22415844.169 8                      1264.505        1276.105         952.929        1027.531                         977.781         965.368   116725199.50708 117796078.62708                                                                                        52.500          52.500          55.000          49.750                          57.000
+E11  22608569.527 8  22608565.097 8  22608563.997 8  22608564.047 8                       665.699         497.154          40.376         510.124         503.640   118808840.53708                                                                        49.500          51.500          45.000          52.750
+E25  24663032.838 8  24663032.438 8  24663029.258 8  24663031.198 8                      -328.704        -245.433        -266.800        -251.835        -248.633   129605114.78608                                                                        49.750          52.250          44.500          53.250
+G12  23511770.470 9                  23511767.770 9  23511766.210 9                      2809.800        2809.800        2189.435        2189.448                   123555191.69707                                                                        43.750                          29.500          40.000
+G17  20609625.586 8                  20609622.226 8  20609621.916 8                     -1074.955       -1074.955        -837.659        -837.657                   108304324.09708                                                                        53.000                          47.000          52.250
+R01  20313011.440 7                  20313010.730 7  20313011.650 7                      2503.179        2503.179        1946.908        1946.924                   108584687.85608                                                                        48.250                          44.750          43.500
+R15  23337598.960 8                  23337599.800 8  23337599.280 8                      1959.807        1959.807        1524.253        1524.177                   124709047.67307                                                                        41.500                          36.000          35.500
+S26  38400158.861 6                       -91.915                   201794366.69406                        38.000
+S27  37894151.719 6  37894165.469 6       -39.388         -29.476   199136199.12806                        36.250          46.500
+> 2019 07 19 14 28  0.0000000  0 10       0.000482831424
+C12  23668716.363 7                                  23668710.923 7  23668711.603 7                                      2548.781                                        2071.109        1970.864                                   123249262.26107                                 100150095.06708  95304125.50708                                        42.328                                          48.527          50.055
+C24  22730283.466 8  22730282.406 8  22730278.726 8  22730275.276 8                  22730278.086 8  22730277.816         671.032         677.153         505.650         545.266                         518.885         512.279   118362582.71308 119448473.45108  89198550.34409  96179268.00408                  91525444.32109  90362027.76509        52.570          52.844          56.898          50.664                          57.777          60.172
+E07  24183987.150 8  24183987.390 9  24183984.420 8  24183986.150 9  24183986.450 9       375.634         280.509         304.902         287.831         284.174   127087729.17308  94903182.77209 103155627.67208  97378917.09409  96141048.58109        51.926          56.313          49.332          57.508          59.816
+E36  27142810.921 6  27142812.441 7  27142809.951 6  27142811.201 7  27142811.431 7      1029.584         768.870         835.733         788.941         778.913   142636459.58106 106514246.02907 115776352.44606 109292878.69207 107903558.50707        40.488          41.840          38.648          44.211          45.797
+G03  23113912.163 6  23113912.393 5  23113912.823 5  23113912.963 7  23113911.633 8     -1692.876       -1692.876       -1319.150       -1319.169       -1264.198   121464545.66706 121464433.65705  94647612.92705  94647618.93807  90703966.24308        41.047          30.133          30.133          44.137          51.258
+G32  24644561.961 6  24644563.141 4  24644563.681 4  24644563.081 7  24644561.091 7     -3635.295       -3635.295       -2832.781       -2832.763       -2714.755   129508036.31206 129508033.31204 100915348.30904 100915353.30407  96710538.09707        38.902          26.676          26.676          42.320          46.836
+R09  21364504.446 8  21364504.856 8  21364503.336 7  21364503.376 7  21364490.376 8     -2006.144       -2006.144       -1560.341       -1560.333       -1506.330   114085296.81408 114085299.82008  88733014.21807  88733006.21307  85661523.18708        49.543          48.590          46.828          45.375          51.484
+R26  21998765.762 7  21998766.272 7  21998765.312 7  21998766.422 7  21998751.722 8      2750.993        2750.993        2139.671        2139.650        2067.784   117348509.24207 117348373.24307  91270973.40307  91270971.40607  88204600.05308        46.867          46.320          44.227          42.855          51.359
+S23  37009326.377 8  37009324.527 8       -44.785         -33.412   194485419.76708 145232360.06408        48.680          53.031
+S36  37131972.081 8  37131982.301 9       -42.797         -31.894   195130145.99108 145714072.92909        49.492          55.582

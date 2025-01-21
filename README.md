@@ -4,7 +4,7 @@
 ![ci](https://github.com/geospace-code/georinex/workflows/ci/badge.svg)
 [![PyPi Download stats](http://pepy.tech/badge/georinex)](http://pepy.tech/project/georinex)
 
-RINEX 3 and RINEX 2 reader and batch conversion to NetCDF4 / HDF5 in Python or Matlab.
+RINEX 4, RINEX 3 and RINEX 2 reader and batch conversion to NetCDF4 / HDF5 in Python or Matlab.
 Batch converts
 [NAV](./Readme_NAV.md)
 and
@@ -23,7 +23,7 @@ where ease of cross-platform install and correctness are primary goals.
 
 ## Input data types
 
-* RINEX 3.x or RINEX 2.x
+* RINEX 4.x, RINEX 3.x, or RINEX 2.x
   * NAV
   * OBS
 * Plain ASCII or seamlessly read compressed ASCII in:
@@ -79,7 +79,7 @@ python -m pytest
 The simplest command-line use is through the top-level `python -m georinex.read` script.
 Normally you'd use the `-p` option with single files to plot, if not converting.
 
-Read single RINEX3 or RINEX 2 Obs or Nav file:
+Read single RINEX 4, RINEX 3, or RINEX 2 Obs or Nav file:
 
 ```sh
 python -m georinex.read myrinex.XXx
@@ -131,7 +131,7 @@ dat = gr.load('my.rnx', tlim=['2017-02-23T12:59', '2017-02-23T13:13'])
 
 ## read RINEX
 
-This convenience function reads any possible format (including compressed, Hatanaka) RINEX 2/3 OBS/NAV or `.nc` file:
+This convenience function reads several formats (including compressed, Hatanaka) RINEX 2, RINEX 3, RINEX 4 OBS/NAV or `.nc` file:
 
 ```python
 obs = gr.load('tests/demo.10o')
@@ -247,13 +247,8 @@ shows that `np.genfromtxt()` is consuming about 30% of processing time, and `xar
 
 ## Notes
 
-* RINEX 3.03 [specification](https://files.igs.org/pub/data/format/rinex303.pdf) [release notes](https://files.igs.org/pub/data/format/rinex303-release-notes.pdf)
-* RINEX 3.04 [specification](https://files.igs.org/pub/data/format/rinex304.pdf)  [release notes](https://files.igs.org/pub/data/format/rinex304-release-notes.pdf)
-* RINEX 3.05 [specification](https://files.igs.org/pub/data/format/rinex305.pdf) [release notes](https://www.igs.org/news/rinex305/)
-
 * GPS satellite position is given for each time in the NAV file as Keplerian parameters, which can be [converted to ECEF](https://ascelibrary.org/doi/pdf/10.1061/9780784411506.ap03).
 * https://downloads.rene-schwarz.com/download/M001-Keplerian_Orbit_Elements_to_Cartesian_State_Vectors.pdf
-* http://www.gage.es/gFD
 
 ### Number of SVs visible
 

@@ -34,7 +34,7 @@ def test_header(fn, rtype, vers):
 
 @pytest.mark.parametrize(
     "fn",
-    ["demo.10o", "demo3.10o"],
+    ["demo.10o", "obs3.01gage.10o"],
     ids=["obs2", "obs3"],
 )
 def test_position(fn):

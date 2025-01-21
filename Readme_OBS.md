@@ -1,6 +1,6 @@
 # RINEX OBS files
 
-To read RINEX 2 or 3 OBS file:
+To read RINEX 2 or RINEX 3 OBS file:
 
 ```python
 obs = gr.load('tests/demo_MO.rnx')

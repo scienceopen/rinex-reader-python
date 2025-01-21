@@ -295,18 +295,28 @@ def obsheader3(
         if "SYS / # / OBS TYPES" in hd:
             k = c[0]
             fields[k] = c[6:60].split()
-            N = int(c[3:6])
+            NobsTypes = int(c[3:6])
             # %% maximum number of fields in a file, to allow fast Numpy parse.
-            Fmax = max(N, Fmax)
+            Fmax = max(NobsTypes, Fmax)
 
-            n = N - 13
-            while n > 0:  # Rinex 3.03, pg. A6, A7
+            NfieldsPerLine = 13
+            """
+            GNSS OBSERVATION DATA FILE - HEADER SECTION DESCRIPTION
+
+            Rinex 3.03, Table A2 on pages A6, A7
+            Rinex 3.04, Table A2 on page A7
+            Rinex 3.05, Table A2  on pages 52, 53
+            """
+            for _ in range(NobsTypes // NfieldsPerLine):
                 ln = f.readline()
                 assert "SYS / # / OBS TYPES" in ln[60:]
                 fields[k] += ln[6:60].split()
-                n -= 13
 
-            assert len(fields[k]) == N
+            if k == "S":
+                # https://server.gage.upc.edu/gLAB/HTML/Observation_Rinex_v3.05.html
+                assert len(fields[k]) in {NobsTypes, NobsTypes * 2}
+            else:
+                assert len(fields[k]) == NobsTypes
 
             continue
 
